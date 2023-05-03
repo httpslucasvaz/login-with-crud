@@ -8,7 +8,7 @@ provider.setCustomParameters({
     prompt: 'select_account'
 })
 
-const auth = getAuth(firebase_app);
+export const auth = getAuth(firebase_app);
 
 export const login = async () => {
 
