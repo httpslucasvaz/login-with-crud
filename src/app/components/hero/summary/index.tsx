@@ -19,7 +19,7 @@ export function Summary() {
             <Box sx={{
                 display: "flex",
                 alignItems: "center",
-                '&:first-child': {
+                '&:first-of-type': {
                     marginRight: "0.5rem",
                 }
             }}>
