@@ -5,11 +5,12 @@ import SearchIcon from '@mui/icons-material/Search';
 import { useState } from "react";
 import api from "@/service/api";
 
-    
+
 
 export function InputSearch() {
 
     const [search, setSearch] = useState<string>('')
+    const [movieResults, setMovieResults] = useState([])
 
     const handleButtonClick = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         setSearch((event.target as HTMLInputElement).value)
@@ -22,16 +23,17 @@ export function InputSearch() {
         }
     };
 
- async function fetchMovieSearch() {
+    async function fetchMovieSearch() {
         try {
             const response = await api
-            .get(`/search/movie?api_key=${process.env.NEXT_PUBLIC_API_KEY}&language=pt-BR&page=1&include_adult=false&query=${search}}`)
-            console.log(response.data)
+                .get(`/search/movie?api_key=${process.env.NEXT_PUBLIC_API_KEY}&language=pt-BR&page=1&include_adult=false&query=${search}}`)
+                setMovieResults(response.data)
         } catch (error) {
             console.log(error)
         }
     }
 
+    console.log(movieResults)
 
 
     return (
@@ -60,6 +62,11 @@ export function InputSearch() {
                 }} />      PESQUISAR FILME
             </Button>
 
+                {Array.isArray(movieResults) && movieResults.map((movie: any) => {
+                    return (
+                        <p> {movie.results.original_title} </p>
+                    )
+                } )}
 
         </Container>
     )
