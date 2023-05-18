@@ -2,15 +2,20 @@
 
 import { Button, Container, TextField } from "@mui/material";
 import SearchIcon from '@mui/icons-material/Search';
-import { useState } from "react";
+import { useContext, useState } from "react";
 import api from "@/service/api";
+import { MovieSearchListProps } from "@/@types/movieTypes";
+import { MovieSearchList } from "./movieSearchList/movieSearchList";
+import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
+import { MyContext } from "@/context/isSearchOn";
 
 
 
 export function InputSearch() {
 
     const [search, setSearch] = useState<string>('')
-    const [movieResults, setMovieResults] = useState([])
+    const [movieResults, setMovieResults] = useState<MovieSearchListProps[]>([])
+    const { isSearchOn, setIsSearchOn } = useContext(MyContext)
 
     const handleButtonClick = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         setSearch((event.target as HTMLInputElement).value)
@@ -27,10 +32,17 @@ export function InputSearch() {
         try {
             const response = await api
                 .get(`/search/movie?api_key=${process.env.NEXT_PUBLIC_API_KEY}&language=pt-BR&page=1&include_adult=false&query=${search}}`)
-                setMovieResults(response.data)
+            setMovieResults(response.data.results)
+            setIsSearchOn(true)
         } catch (error) {
             console.log(error)
         }
+    }
+
+    const handleBackButton = () => {
+        setSearch('')
+        setMovieResults([])
+        setIsSearchOn(false)
     }
 
     console.log(movieResults)
@@ -45,6 +57,7 @@ export function InputSearch() {
                 fullWidth
                 color="success"
                 onKeyPress={handleKeyPress}
+                minRows={3}
                 onChange={handleButtonClick}
                 sx={{
                     margin: '1rem 0'
@@ -61,13 +74,21 @@ export function InputSearch() {
                     marginRight: "0.5rem",
                 }} />      PESQUISAR FILME
             </Button>
-
-                {Array.isArray(movieResults) && movieResults.map((movie: any) => {
-                    return (
-                        <p> {movie.results.original_title} </p>
-                    )
-                } )}
-
+            
+            {isSearchOn && <Button
+                variant="outlined"
+                size="small"
+                fullWidth
+                startIcon={<ArrowBackIosNewIcon />}
+                color="secondary"
+                sx={{
+                    margin: '1rem 0'
+                }}
+                onClick={handleBackButton}
+            >VOLTAR
+            </Button>}
+            
+            <MovieSearchList movieResults={movieResults} />
         </Container>
     )
 }
