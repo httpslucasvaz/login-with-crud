@@ -5,10 +5,25 @@ import { Box, Button, Typography } from "@mui/material";
 import Image from "next/image";
 import BrokenImageIcon from '@mui/icons-material/BrokenImage';
 import { MovieSearchProps } from "@/@types/movieTypes";
-
+import { DocumentData, QuerySnapshot, addDoc, getDocs } from "firebase/firestore";
+import { userCollection } from "@/firebase/db/firestore";
+import { useEffect, useState } from "react";
+import { UserMovieProps } from "@/@types/userMovieTypes";
 
 
 export function MovieSearchList({ movieResults }: MovieSearchProps) {
+    
+    const [userMovies, setUserMovies] = useState<UserMovieProps[]>([])
+
+    async function getUsers() {
+        const data: QuerySnapshot<DocumentData> = await getDocs(userCollection);
+        setUserMovies(data.docs.map((doc) => ({ ...doc.data(), id: doc.id } as UserMovieProps)));
+    }
+
+    useEffect(() => {
+        getUsers()
+    }, [])
+    
 
     const DateFormat = (releaseDate: string) => {
         const date = new Date(releaseDate)
@@ -17,11 +32,23 @@ export function MovieSearchList({ movieResults }: MovieSearchProps) {
         return date.toLocaleDateString('pt-BR', options);
     }
 
+    const handleAddMovie = async (movieID: number, title: string, poster_path: string | null, original_title: string) => {
+        const addMovie = await addDoc(userCollection, {
+            movieID: movieID,
+            title: title,
+            poster_path: poster_path,
+            original_title: original_title,
+            rating: 0
+        })
+    }
+
+    
 
     return (
         <>
-
-            {movieResults.map((movie) => (
+         {movieResults.map((movie) => {
+            const verify = userMovies.map((userMovie) => userMovie.movieID).includes(movie.id)
+            return (
                 <Box sx={{
                     display: 'flex',
                     justifyContent: 'space-between',
@@ -53,11 +80,17 @@ export function MovieSearchList({ movieResults }: MovieSearchProps) {
 
                         }}> {movie.overview ? movie.overview : <p>sem descrição.</p>} </Typography>
                     </Box>
-                    <Button variant="contained">
+
+                    {!verify && <Button variant="contained" onClick={() => handleAddMovie(movie.id, movie.title, movie.poster_path, movie.original_title)}>
                         ADD
-                    </Button>
+                    </Button>}
+                    
+                    {verify && 
+                    <Button variant="text">
+                        ADD
+                    </Button>}
                 </Box>
-            ))}
+            )})}
         </>
     )
 }
