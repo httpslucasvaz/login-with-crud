@@ -15,6 +15,8 @@ export function InputSearch() {
 
     const [search, setSearch] = useState<string>('')
     const [movieResults, setMovieResults] = useState<MovieSearchListProps[]>([])
+    const [noResults, setNoResults] = useState<boolean>(false)
+
     const { isSearchOn, setIsSearchOn } = useContext(MyContext)
 
     const handleButtonClick = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -36,13 +38,17 @@ export function InputSearch() {
             setIsSearchOn(true)
         } catch (error) {
             console.log(error)
+        } finally {
+            if (movieResults.length === 0) [
+                setNoResults(true)
+            ]
         }
     }
 
     const handleBackButton = () => {
-        setSearch('')
         setMovieResults([])
         setIsSearchOn(false)
+        setNoResults(false)
     }
 
     console.log(movieResults)
@@ -74,7 +80,7 @@ export function InputSearch() {
                     marginRight: "0.5rem",
                 }} />      PESQUISAR FILME
             </Button>
-            
+
             {isSearchOn && <Button
                 variant="outlined"
                 size="small"
@@ -87,8 +93,9 @@ export function InputSearch() {
                 onClick={handleBackButton}
             >VOLTAR
             </Button>}
-            
+
             <MovieSearchList movieResults={movieResults} />
+            {noResults && <p>Nenhum resultado encontrado.</p>}
         </Container>
     )
 }

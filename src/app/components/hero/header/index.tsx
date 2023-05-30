@@ -2,8 +2,8 @@
 import { Avatar, Box, Tooltip } from "@mui/material";
 import MovieFilterIcon from '@mui/icons-material/MovieFilter';
 import { auth } from "@/firebase/auth/auth";
-import { userTypeProps } from "@/app/@types/userType";
 import LogoutIcon from '@mui/icons-material/Logout';
+import { userTypeProps } from "@/@types/userType";
 
 
 export function Header() {

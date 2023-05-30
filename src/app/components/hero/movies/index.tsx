@@ -1,13 +1,22 @@
 'use client'
 
-import { Container} from "@mui/material";
-import MovieCard from "./card";
+import { Container, Divider, Typography} from "@mui/material";
+import { MyMovies } from "./card";
+import { useContext } from "react";
+import { MyContextMovies } from "@/context/getUserMovies";
+
 
 export function Movies() {
+    const { userMovies } = useContext(MyContextMovies)
 
     return (
         <Container maxWidth="md">
-            <MovieCard />  
+            <Typography variant="h5" component="h3" sx={{ margin: "1rem 0" }}>
+                Meus Filmes
+            </Typography>
+            <Divider />
+            {userMovies.length === 0 && <Typography variant="h6" component="h3" color="gray" sx={{ margin: "1rem 0", display: "flex", justifyContent: "center" }}>NENHUM FILME ADICIONADO</Typography>}
+            <MyMovies />
           
         </Container>
     )

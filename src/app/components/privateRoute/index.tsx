@@ -1,7 +1,7 @@
 import { useRouter } from "next/navigation";
 import { ReactNode, useEffect, useState } from "react";
 
-import { APP_ROUTES } from "@/app/constants/app-routes";
+import { APP_ROUTES } from "@/constants/app-routes";
 import { auth } from "@/firebase/auth/auth";
 import { onAuthStateChanged } from "firebase/auth";
 

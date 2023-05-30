@@ -18,7 +18,7 @@ export const MyContextMovies = createContext<MovieProps>({} as MovieProps);
 export function GetUserMoviesProvider({ children }: MyContextMovieProps) {
     const [userMovies, setUserMovies] = useState<UserMovieProps[]>([])
 
-    const getUserMoviesOnSnapshot =  () => {
+    const getUserMoviesOnSnapshot = () => {
         onSnapshot(userCollection, (snapshot) => {
             let data = snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id } as UserMovieProps))
             setUserMovies(data)
@@ -28,7 +28,7 @@ export function GetUserMoviesProvider({ children }: MyContextMovieProps) {
     useEffect(() => {
         getUserMoviesOnSnapshot()
     }, [])
-       
+
 
     return (
         <MyContextMovies.Provider value={{ userMovies, setUserMovies }}>
@@ -36,13 +36,3 @@ export function GetUserMoviesProvider({ children }: MyContextMovieProps) {
         </MyContextMovies.Provider>
     )
 }   
-
-
- // async function getUsers() {
-    //     const data: QuerySnapshot<DocumentData> = await getDocs(userCollection);
-    //     setUserMovies(data.docs.map((doc) => ({ ...doc.data(), id: doc.id } as UserMovieProps)));
-    // }
-
-    // useEffect(() => {
-    //     getUsers()
-    // }, [])

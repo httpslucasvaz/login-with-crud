@@ -7,7 +7,6 @@ import { useContext } from "react";
 import { MyContext } from "@/context/isSearchOn";
 
 
-
 export function Hero() {
     const { isSearchOn } = useContext(MyContext)
     return (

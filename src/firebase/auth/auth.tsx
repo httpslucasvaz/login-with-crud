@@ -1,6 +1,6 @@
 
 import firebase_app from "../config";
-import { GoogleAuthProvider, getAuth, signInWithPopup, signOut } from "firebase/auth";
+import { GoogleAuthProvider, getAuth, signInWithPopup } from "firebase/auth";
 
 
 const provider = new GoogleAuthProvider();
@@ -23,8 +23,3 @@ export const login = async () => {
     )
 }
 
-export const logout = () => {
-    signOut(auth).then(() => {
-        console.log('deslogado')
-    }).catch((err) => console.log(err))
-};

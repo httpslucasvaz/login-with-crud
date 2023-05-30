@@ -1,11 +1,15 @@
+import { MyContextMovies } from "@/context/getUserMovies";
 import { Box, Container, Typography } from "@mui/material";
+import { useContext } from "react";
 
 export function Summary() {
+    const { userMovies } = useContext(MyContextMovies)
+
 
     return (
         <Container maxWidth="md" sx={{
             display: "flex",
-            justifyContent: "space-around",
+            justifyContent: "center",
             padding: "0.5rem",
         }}>
             <Box sx={{
@@ -14,7 +18,7 @@ export function Summary() {
             }}>
                 <strong>Filmes:</strong> <Typography sx={{
                     marginLeft: "0.5rem",
-                }}>16</Typography>
+                }}> {userMovies.length} </Typography>
             </Box>
             <Box sx={{
                 display: "flex",
@@ -23,10 +27,7 @@ export function Summary() {
                     marginRight: "0.5rem",
                 }
             }}>
-                <strong>Horas: </strong>
-                <Typography sx={{
-                    marginLeft: "0.5rem",
-                }}>16</Typography>
+            
             </Box>
         </Container>
     )

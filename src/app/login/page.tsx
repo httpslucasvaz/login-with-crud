@@ -4,6 +4,7 @@ import { Box, Button, Container, CssBaseline, Divider, Typography } from "@mui/m
 import GoogleIcon from '@mui/icons-material/Google';
 import { login } from "@/firebase/auth/auth";
 
+
 export default function Login() {
 
     return (

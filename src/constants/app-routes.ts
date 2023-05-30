@@ -1,6 +1,6 @@
 export const APP_ROUTES = {
     private: {
-        home: '/'
+        home: '/',
     },
     public: {
         login: '/login',
