@@ -3,6 +3,7 @@ import Pagination from '@mui/material/Pagination';
 type MoviePaginationProps = {
     totalPages: number;
     currentPage: number;
+    color: string;
     onPageChange: (page: number) => void;
 }
 
@@ -22,6 +23,7 @@ export function MoviesPagination({
             count={totalPages}
             page={currentPage}
             onChange={handlePageChange}
+            color='primary'
         />
     )
 }

@@ -44,7 +44,15 @@ export function MyMovies() {
 
     return (
         <>
-            <Box sx={{ width: '100%', display: "flex", flexWrap: "wrap", justifyContent: "center", gap: '0.5rem', marginTop: '0.5rem' }}>
+            <Box 
+            sx={{ 
+                width: '100%', 
+                display: "flex",
+                flexWrap: "wrap", 
+                justifyContent: "center", 
+                gap: '0.5rem', 
+                marginTop: '0.5rem' 
+                }}>
                 {currentItems.map((movie) => {
 
 
@@ -53,8 +61,10 @@ export function MyMovies() {
                             maxWidth: 200,
                             display: "flex",
                             flexDirection: "column",
-                            alignItems: "center",
-                            justifyContent: "baseline",
+                            alignItems: "center", 
+                            borderBottomLeftRadius: '0.5rem',
+                            borderBottomRightRadius: '0.5rem',
+                            border: '1px solid #ccc',
                         }}
                             key={movie.id}>
                             {movie.poster_path && <Image src={`${process.env.NEXT_PUBLIC_BASEURL_IMG}${movie.poster_path}`} alt={movie.title} width={200} height={300} />}
@@ -64,11 +74,10 @@ export function MyMovies() {
                                     flexDirection: "column",
                                     alignItems: "center",
                                     justifyContent: "space-between",
-                                    backgroundColor: '#D9D9D9',
                                     width: '100%',
-                                    height: 160
+                                    minHeight: 130,
                                 }}>
-                                <Typography variant='body2' sx={{ textAlign: 'center' }}> {movie.title} </Typography>
+                                <Typography variant='body1' sx={{ textAlign: 'center' }}> {movie.title} </Typography>
                                 <Box
                                     sx={{
                                         display: "flex",
@@ -86,7 +95,12 @@ export function MyMovies() {
                                         }}
                                         sx={{ padding: "0.5rem 0" }}
                                     />
-                                    <Button variant='text' color='error' size="small" fullWidth onClick={() => handleDeleteMovie(movie.id)}> Excluir </Button>
+                                    <Button 
+                                    variant='text' 
+                                    color='error' 
+                                    size="small" 
+                                    fullWidth 
+                                    onClick={() => handleDeleteMovie(movie.id)}> Excluir </Button>
                                 </Box>
                             </Box>
                         </Box>
@@ -104,6 +118,7 @@ export function MyMovies() {
                     totalPages={Math.ceil(userMovies.length / ITEMS_PER_PAGE)}
                     currentPage={currentPage}
                     onPageChange={handlePageChange}
+                    color='primary'
                 />}
             </Box>
 
