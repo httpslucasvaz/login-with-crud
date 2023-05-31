@@ -1,7 +1,8 @@
 'use client';
 
-import { Box, Button, Container, CssBaseline, Divider, Typography } from "@mui/material";
+import { Box, Button, Container, CssBaseline, Divider } from "@mui/material";
 import GoogleIcon from '@mui/icons-material/Google';
+import MovieFilterIcon from '@mui/icons-material/MovieFilter';
 import { login } from "@/firebase/auth/auth";
 
 
@@ -9,7 +10,7 @@ export default function Login() {
 
     return (
         <Box sx={{
-            bgcolor: '#D9D9D9'
+            bgcolor: '#1976D2'
         }}>
             <CssBaseline />
 
@@ -24,14 +25,21 @@ export default function Login() {
                     flexDirection: 'column',
                     justifyContent: 'space-between',
                     padding: '3rem',
-                    border: '1px solid #D1D1D1',
+                    bgcolor: '#e9e9e9',
                     borderRadius: '1rem',
-                    height: '50vh',
                 }}>
-                    <div>
-                        <Typography variant="h4">login</Typography>
-                        <Divider />
-                    </div>
+                    <Box sx={{
+                        display: 'flex',
+                        justifyContent: 'center',
+                    }}>
+                        
+                        <MovieFilterIcon fontSize="large" sx={{
+                fontSize: '3rem',
+                color: '#1976D2'
+            }} />
+                        
+                    </Box>
+                    <Divider />
                     <p>Anote todos os filmes que já assistiu!</p>
                     <Button variant="contained" startIcon={<GoogleIcon />} size="large" onClick={login}>
                         Login com Google
