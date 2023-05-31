@@ -9,6 +9,7 @@ import { db } from '@/firebase/db/firestore';
 import Image from 'next/image';
 import { MyContextMovies } from '@/context/getUserMovies';
 import { MoviesPagination } from '../pagination';
+import { auth } from '@/firebase/auth/auth';
 
 
 export function MyMovies() {
@@ -27,12 +28,14 @@ export function MyMovies() {
 
 
     const handleDeleteMovie = async (id: string) => {
-        const userDoc = doc(db, "users", id)
+        const userAuth = auth.currentUser?.uid as string
+        const userDoc = doc(db, "users", userAuth, "moviesDB", id)
         await deleteDoc(userDoc)
     }
 
     const handleAddRating = async (id: string, rating: number) => {
-        const userDoc = doc(db, "users", id)
+        const userAuth = auth.currentUser?.uid as string
+        const userDoc = doc(db, "users", userAuth, "moviesDB", id)
 
         await updateDoc(userDoc, {
             rating: rating

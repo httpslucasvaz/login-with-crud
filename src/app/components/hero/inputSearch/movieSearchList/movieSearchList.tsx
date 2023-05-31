@@ -5,12 +5,13 @@ import { Box, Button, Typography } from "@mui/material";
 import Image from "next/image";
 import BrokenImageIcon from '@mui/icons-material/BrokenImage';
 import { MovieSearchProps } from "@/@types/movieTypes";
-import { addDoc } from "firebase/firestore";
-import { userCollection } from "@/firebase/db/firestore";
+import { addDoc, collection } from "firebase/firestore";
+import { db } from "@/firebase/db/firestore";
 import { useContext } from "react";
 import { MyContextMovies } from "@/context/getUserMovies";
 import AddIcon from '@mui/icons-material/Add';
 import DeleteIcon from '@mui/icons-material/Delete';
+import { auth } from "@/firebase/auth/auth";
 
 export function MovieSearchList({ movieResults }: MovieSearchProps) {
 
@@ -23,8 +24,18 @@ export function MovieSearchList({ movieResults }: MovieSearchProps) {
         return date.toLocaleDateString('pt-BR', options);
     }
 
+    
+
+    // const userCollection = collection(db, 'users')
+
+    // const testCollection = collection(db, "users", userDoc.id, "test");
+    // addDoc(testCollection, { title: "hello world })
+
     const handleAddMovie = async (movieID: number, title: string, poster_path: string | null, original_title: string) => {
-        const addMovie = await addDoc(userCollection, {
+        const userAuth = auth.currentUser?.uid as string
+        const collectionRef = collection(db, 'users', userAuth, "moviesDB")
+
+        const addMovie = await addDoc(collectionRef, {
             movieID: movieID,
             title: title,
             poster_path: poster_path,
