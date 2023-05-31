@@ -13,7 +13,6 @@ export function Header() {
         photoURL: auth.currentUser?.photoURL,
     } : null;
 
-    console.log(auth.currentUser)
 
     return (
         <Box sx={{

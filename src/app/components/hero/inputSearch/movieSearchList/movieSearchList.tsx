@@ -24,13 +24,6 @@ export function MovieSearchList({ movieResults }: MovieSearchProps) {
         return date.toLocaleDateString('pt-BR', options);
     }
 
-    
-
-    // const userCollection = collection(db, 'users')
-
-    // const testCollection = collection(db, "users", userDoc.id, "test");
-    // addDoc(testCollection, { title: "hello world })
-
     const handleAddMovie = async (movieID: number, title: string, poster_path: string | null, original_title: string) => {
         const userAuth = auth.currentUser?.uid as string
         const collectionRef = collection(db, 'users', userAuth, "moviesDB")

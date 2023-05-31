@@ -17,7 +17,8 @@ export default function RootLayout({
 }) {
     const pathname = usePathname()
     const isPublicPage = checkIsPublicRoute(pathname!)
-    console.log(pathname)
+    
+    
     return (
         <html lang="pt-BR">
 
