@@ -5,12 +5,12 @@ import { Box, Button, Typography } from "@mui/material";
 import Image from "next/image";
 import BrokenImageIcon from '@mui/icons-material/BrokenImage';
 import { MovieSearchProps } from "@/@types/movieTypes";
-import { addDoc, collection } from "firebase/firestore";
+import { addDoc, collection, deleteDoc, doc } from "firebase/firestore";
 import { db } from "@/firebase/db/firestore";
 import { useContext } from "react";
 import { MyContextMovies } from "@/context/getUserMovies";
 import AddIcon from '@mui/icons-material/Add';
-import DeleteIcon from '@mui/icons-material/Delete';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import { auth } from "@/firebase/auth/auth";
 
 export function MovieSearchList({ movieResults }: MovieSearchProps) {
@@ -35,6 +35,12 @@ export function MovieSearchList({ movieResults }: MovieSearchProps) {
             original_title: original_title,
             rating: 0
         })
+    }
+
+    const handleDeleteMovie = async (id: string) => {
+        const userAuth = auth.currentUser?.uid as string
+        const userDoc = doc(db, "users", userAuth, "moviesDB", id)
+        await deleteDoc(userDoc)
     }
 
 
@@ -83,7 +89,7 @@ export function MovieSearchList({ movieResults }: MovieSearchProps) {
 
                         {verify &&
                             <Button variant="text">
-                                <DeleteIcon color="error" />
+                                <CheckCircleIcon color="success" />
                             </Button>}
                     </Box>
                 )
